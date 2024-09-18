@@ -1,4 +1,4 @@
-import dotenv from 'dotenv';
+const dotenv = require('dotenv');
 
 dotenv.config();
 
@@ -9,7 +9,7 @@ const {
   NOTIFY_USER_QUEUE
 } = process.env;
 
-export {
+module.exports = {
   PORT,
   MONGO_URI,
   RABBITMQ_URL,

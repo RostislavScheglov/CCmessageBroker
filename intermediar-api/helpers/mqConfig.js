@@ -1,7 +1,7 @@
-import amqp from 'amqplib/callback_api';
-import { RABBITMQ_URL } from '../config';
+const amqp = require('amqplib/callback_api');
+const { RABBITMQ_URL } = require('../config');
 
-export const sendMessageToQueue = (queue, message) => {
+const sendMessageToQueue = (queue, message) => {
   amqp.connect(RABBITMQ_URL, (err, connection) => {
     if (err) {
       console.error('Failed to connect to RabbitMQ', err);
@@ -19,4 +19,8 @@ export const sendMessageToQueue = (queue, message) => {
       console.log(`Sent message to ${queue}`);
     });
   });
+};
+
+module.exports = {
+  sendMessageToQueue
 };

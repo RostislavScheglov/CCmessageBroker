@@ -1,7 +1,7 @@
-import { NOTIFY_USER_QUEUE } from '../config';
-import { User } from '../db/userModel';
-import { sendMessageToQueue } from '../helpers/mqConfig';
-import { STATUS_CODES } from '../helpers/statusCodes';
+const { NOTIFY_USER_QUEUE } = require('../config');
+const { User } = require('../db/userModel');
+const { sendMessageToQueue } = require('../helpers/mqConfig');
+const { STATUS_CODES } = require('../helpers/statusCodes');
 
 /**
  * User Controllers
@@ -20,7 +20,7 @@ import { STATUS_CODES } from '../helpers/statusCodes';
  * @param {Function} next - The Express next function used to pass control to the next middleware.
  * @returns {Promise<void>} A Promise that resolves when the response is sent.
  */
-export const registerUser = async (req, res, next) => {
+const registerUser = async (req, res, next) => {
   try {
     const { name, email } = req.body;
     const newUser = new User({ name, email });
@@ -30,8 +30,13 @@ export const registerUser = async (req, res, next) => {
     // Send message to notifyUser queue
     sendMessageToQueue(NOTIFY_USER_QUEUE, { name: newUser.name, email: newUser.email });
 
-    return res.status(STATUS_CODES.CREATED).json();
+    res.status(201).send('User created and notification sent');
   } catch (error) {
-    return next(error);
+    console.error('Error creating user:', error);
+    res.status(500).send('Error creating user');
   }
+};
+
+module.exports = {
+  registerUser
 };
