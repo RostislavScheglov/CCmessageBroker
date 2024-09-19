@@ -1,5 +1,5 @@
 FROM rabbitmq:3-management
 
-COPY rabbitmq.conf /etc/rabbitmq/rabbitmq.conf
+COPY rabbitMq.conf /etc/rabbitmq/rabbitMq.conf
 
 EXPOSE 5672 15672

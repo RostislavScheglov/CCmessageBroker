@@ -22,15 +22,14 @@ const { STATUS_CODES } = require('../helpers/statusCodes');
  */
 const registerUser = async (req, res, next) => {
   try {
-    const { name, email } = req.body;
-    const newUser = new User({ name, email });
-    await newUser.save();
-    console.log('User created:', newUser);
+    // const { name, email } = req.body;
+    // const newUser = new User({ name, email });
+    // await newUser.save();
+    // console.log('User created:', newUser);
 
-    // Send message to notifyUser queue
-    sendMessageToQueue(NOTIFY_USER_QUEUE, { name: newUser.name, email: newUser.email });
+    sendMessageToQueue(NOTIFY_USER_QUEUE, { name: 'Tzzzzt', email: 'privv' });
 
-    res.status(201).send('User created and notification sent');
+    res.status(STATUS_CODES.CREATED).send('User created');
   } catch (error) {
     console.error('Error creating user:', error);
     res.status(500).send('Error creating user');

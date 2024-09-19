@@ -37,7 +37,6 @@ const receiveMessageFromQueue = (queue, callback) => {
         if (msg !== null) {
           console.log(`Received message from ${queue}`);
           callback(null, JSON.parse(msg.content.toString()));
-
           channel.ack(msg);
         } else {
           callback(new Error('No message received'));
