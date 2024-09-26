@@ -30,6 +30,7 @@ module.exports = {
     'arrow-body-style': 'warn',
     'arrow-parens': ['warn', 'as-needed'],
     'no-debugger': [0],
+    'no-console': 'off',
     'padded-blocks': [0],
     'no-trailing-spaces': 'warn',
     'block-spacing': 'warn',

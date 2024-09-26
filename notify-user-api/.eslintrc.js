@@ -31,6 +31,7 @@ module.exports = {
     'arrow-parens': ['warn', 'as-needed'],
     'no-debugger': [0],
     'padded-blocks': [0],
+    'no-console': 'off',
     'no-trailing-spaces': 'warn',
     'block-spacing': 'warn',
     'no-unused-vars': 'warn',

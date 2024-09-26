@@ -1,5 +1,5 @@
 const { NOTIFY_USER_QUEUE } = require('../config');
-const { User } = require('../db/userModel');
+const User = require('../db/userModel');
 const { sendMessageToQueue } = require('../helpers/mqConfig');
 const { STATUS_CODES } = require('../helpers/statusCodes');
 
@@ -22,12 +22,22 @@ const { STATUS_CODES } = require('../helpers/statusCodes');
  */
 const registerUser = async (req, res, next) => {
   try {
-    // const { name, email } = req.body;
-    // const newUser = new User({ name, email });
-    // await newUser.save();
-    // console.log('User created:', newUser);
+    const {
+      name, email, country, password
+    } = req.body;
+    const newUser = new User({
+      name, email, password, country
+    });
 
-    sendMessageToQueue(NOTIFY_USER_QUEUE, { name: 'Tzzzzt', email: 'privv' });
+    await newUser.save();
+
+    const { password: _, ...userToQueue } = newUser.toObject();
+
+    sendMessageToQueue(NOTIFY_USER_QUEUE, userToQueue, err => {
+      if (err) {
+        console.error('Error sending message:', err);
+      }
+    });
 
     res.status(STATUS_CODES.CREATED).send('User created');
   } catch (error) {

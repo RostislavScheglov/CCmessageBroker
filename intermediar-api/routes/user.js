@@ -1,5 +1,6 @@
 const express = require('express');
 const { registerUser } = require('../controllers/user');
+const checkUserExists = require('../middleware/checkUserExists');
 
 /**
  * User router
@@ -8,6 +9,6 @@ const { registerUser } = require('../controllers/user');
  */
 const router = express.Router();
 
-router.post('/register', registerUser);
+router.post('/register', checkUserExists, registerUser);
 
 module.exports = router;
