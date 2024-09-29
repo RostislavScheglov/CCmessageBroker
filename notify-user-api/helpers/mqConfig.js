@@ -1,6 +1,13 @@
 const amqp = require('amqplib/callback_api');
 const { RABBITMQ_URL } = require('../config');
 
+/**
+ * Sends a message to the specified queue.
+ *
+ * @param {string} queue - The name of the queue to send the message to.
+ * @param {Object} message - The message to send to the queue.
+ * @returns {void}
+ */
 const sendMessageToQueue = (queue, message) => {
   amqp.connect(RABBITMQ_URL, (err, connection) => {
     if (err) {
@@ -16,11 +23,21 @@ const sendMessageToQueue = (queue, message) => {
 
       channel.assertQueue(queue, { durable: false });
       channel.sendToQueue(queue, Buffer.from(JSON.stringify(message)));
+
       console.log(`Sent message to ${queue}`);
     });
   });
 };
 
+/**
+ * Receives messages from the specified queue and processes them using the provided callback.
+ *
+ * @param {string} queue - The name of the queue to receive messages from.
+ * @param {Function} callback - The callback function to process received messages.
+ * @param {Error} callback.err - The error object if an error occurs.
+ * @param {Object} callback.message - The received message.
+ * @returns {void}
+ */
 const receiveMessageFromQueue = (queue, callback) => {
   amqp.connect(RABBITMQ_URL, (err, connection) => {
     if (err) {
