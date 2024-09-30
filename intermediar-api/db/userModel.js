@@ -8,6 +8,9 @@ const userSchema = new Schema({
     required: true,
     index: true
   },
+  password: {
+    type: String
+  },
   email: {
     type: String,
     required: true,
@@ -15,8 +18,7 @@ const userSchema = new Schema({
     index: true
   },
   country: {
-    type: String,
-    index: true
+    type: String
   }
 }, {
   timestamps: true
